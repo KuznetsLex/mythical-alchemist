@@ -16,6 +16,7 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	Sprite ing2;
 	Sprite ing3;
 	Sprite fon;
+	Sprite Myal;
 	Texture fon2;
 	OrthographicCamera camera;
 	GestureDetector gestureDetector;
@@ -25,6 +26,9 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 
 	@Override     public void create () {
 	batch = new SpriteBatch();
+
+	Myal = new Sprite(new Texture(Gdx.files.internal("space.png")),64,64);
+	Myal.setPosition(260,-120);
 
 	ing1 = new Sprite(new Texture(Gdx.files.internal("H2.png")),64,64);
 	ing1.setPosition(-50,90);
@@ -58,18 +62,34 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	batch.setProjectionMatrix(camera.combined);
 	batch.begin();
 	fon.draw(batch);
+	Myal.draw(batch);
 
 	if (ing1.getBoundingRectangle().overlaps(ing2.getBoundingRectangle())) {
-		ing1.setTexture(test);
-		fon.setTexture(fon2);
-		ing1.draw(batch);
-		ing3.draw(batch);
+
+		if (ing1.getBoundingRectangle().overlaps(Myal.getBoundingRectangle())){
+			ing3.draw(batch);
 		}
-	else {
+		else{
+
+			ing1.setTexture(test);
+			fon.setTexture(fon2);
+			ing1.draw(batch);
+			ing3.draw(batch);
+
+		}
+		}
+
+
+
+
+		else{ //отрисовка до столкновения
 		ing1.draw(batch);
 		ing2.draw(batch);
 		ing3.draw(batch);
 	}
+
+
+
 	batch.end();
 
 
@@ -94,6 +114,7 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 		ing2.getTexture().dispose();
 		ing3.getTexture().dispose();
 		batch.dispose();
+		Myal.getTexture().dispose();
 	}
 
 	@Override
