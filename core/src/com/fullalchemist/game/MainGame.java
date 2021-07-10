@@ -16,6 +16,7 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	Sprite ing2;
 	Sprite ing3;
 	Sprite fon;
+	Texture fon2;
 	OrthographicCamera camera;
 	GestureDetector gestureDetector;
 	Texture test;
@@ -37,10 +38,12 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	ing3 = new Sprite(new Texture(Gdx.files.internal("Ca.png")),64,64);
 	ing3.setPosition(-30,-30);
 
-	fon = new Sprite(new Texture(Gdx.files.internal("fon.png")),800,450);
+	fon = new Sprite(new Texture(Gdx.files.internal("fon.png")),800,449);
 	fon.setPosition(-400,-225);
 
-	camera = new OrthographicCamera(800,450);
+	fon2 = new Texture("fon2.png");
+
+	camera = new OrthographicCamera(800,449);
 	camera.update();
 
 	gestureDetector = new GestureDetector(this);
@@ -58,6 +61,7 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 
 	if (ing1.getBoundingRectangle().overlaps(ing2.getBoundingRectangle())) {
 		ing1.setTexture(test);
+		fon.setTexture(fon2);
 		ing1.draw(batch);
 		ing3.draw(batch);
 		}
