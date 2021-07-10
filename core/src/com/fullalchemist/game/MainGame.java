@@ -14,6 +14,8 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	SpriteBatch batch;
 	Sprite ing1;
 	Sprite ing2;
+	Sprite ing3;
+	Sprite fon;
 	OrthographicCamera camera;
 	GestureDetector gestureDetector;
 	Texture test;
@@ -23,17 +25,22 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	@Override     public void create () {
 	batch = new SpriteBatch();
 
-	ing1 = new Sprite(new Texture(Gdx.files.internal("1.png")),64,64);
-	ing1.setPosition(120,120);
+	ing1 = new Sprite(new Texture(Gdx.files.internal("H2.png")),64,64);
+	ing1.setPosition(-50,90);
 
 
-	ing2 = new Sprite(new Texture(Gdx.files.internal("2.png")),64,64);
-	ing2.setPosition(40,40);
+	ing2 = new Sprite(new Texture(Gdx.files.internal("o2.png")),64,64);
+	ing2.setPosition(130,50);
 
-	test = new Texture(Gdx.files.internal("4.png"));
+	test = new Texture(Gdx.files.internal("h2o.png"));
 
+	ing3 = new Sprite(new Texture(Gdx.files.internal("Ca.png")),64,64);
+	ing3.setPosition(-30,-30);
 
-	camera = new OrthographicCamera(800,480);
+	fon = new Sprite(new Texture(Gdx.files.internal("fon.png")),800,450);
+	fon.setPosition(-400,-225);
+
+	camera = new OrthographicCamera(800,450);
 	camera.update();
 
 	gestureDetector = new GestureDetector(this);
@@ -47,15 +54,17 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	batch.setProjectionMatrix(camera.combined);
 	batch.begin();
+	fon.draw(batch);
 
-
-	if (ing1.getBoundingRectangle().overlaps(ing2.getBoundingRectangle())){
+	if (ing1.getBoundingRectangle().overlaps(ing2.getBoundingRectangle())) {
 		ing1.setTexture(test);
 		ing1.draw(batch);
+		ing3.draw(batch);
 		}
 	else {
 		ing1.draw(batch);
 		ing2.draw(batch);
+		ing3.draw(batch);
 	}
 	batch.end();
 
@@ -63,10 +72,23 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	}
 
 	@Override
+	public void pause() {
+		super.pause();
+	}
+
+	@Override
+	public void resume() {
+		super.resume();
+	}
+
+
+
+	@Override
 	public void dispose () {
 		super.dispose();
 		ing1.getTexture().dispose();
 		ing2.getTexture().dispose();
+		ing3.getTexture().dispose();
 		batch.dispose();
 	}
 
@@ -98,13 +120,18 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		Vector3 touchPos = new Vector3(x,y,0);
 		camera.unproject(touchPos);
-		if (ing1.getBoundingRectangle().contains(touchPos.x,touchPos.y) /*&&(!ing2.getBoundingRectangle().contains(touchPos.x,touchPos.y))*/) {
+		if (ing1.getBoundingRectangle().contains(touchPos.x,touchPos.y)&&(!ing3.getBoundingRectangle().contains(touchPos.x,touchPos.y))) {
 			ing1.setPosition(touchPos.x - ing1.getWidth() / 2, touchPos.y - ing1.getHeight() / 2);
 
 		}
 
-		if (ing2.getBoundingRectangle().contains(touchPos.x,touchPos.y)/*&&(!ing1.getBoundingRectangle().contains(touchPos.x,touchPos.y))*/) {
+		if (ing2.getBoundingRectangle().contains(touchPos.x,touchPos.y)&&(!ing3.getBoundingRectangle().contains(touchPos.x,touchPos.y))) {
 			ing2.setPosition(touchPos.x - ing2.getWidth() / 2, touchPos.y - ing2.getHeight() / 2);
+
+		}
+
+		if (ing3.getBoundingRectangle().contains(touchPos.x,touchPos.y)&&(!ing1.getBoundingRectangle().contains(touchPos.x,touchPos.y))&&(!ing2.getBoundingRectangle().contains(touchPos.x,touchPos.y))) {
+			ing3.setPosition(touchPos.x - ing3.getWidth() / 2, touchPos.y - ing3.getHeight() / 2);
 
 		}
 
