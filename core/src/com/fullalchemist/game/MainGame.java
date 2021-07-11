@@ -28,7 +28,7 @@ public class MainGame extends ApplicationAdapter implements GestureDetector.Gest
 	batch = new SpriteBatch();
 
 	Myal = new Sprite(new Texture(Gdx.files.internal("space.png")),64,64);
-	Myal.setPosition(260,-120);
+	Myal.setPosition(290,-150);
 
 	ing1 = new Sprite(new Texture(Gdx.files.internal("H2.png")),64,64);
 	ing1.setPosition(-50,90);
